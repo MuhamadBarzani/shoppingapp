@@ -5,7 +5,7 @@ final List products = [
     "price": "1200",
     "url": "assets/images/laptops/msi_gl.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
   {
     "id": "1",
@@ -13,7 +13,7 @@ final List products = [
     "price": "900",
     "url": "assets/images/laptops/tuf.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
   {
     "id": "2",
@@ -21,7 +21,7 @@ final List products = [
     "price": "800",
     "url": "assets/images/laptops/zypherus.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
   {
     "id": "3",
@@ -29,7 +29,7 @@ final List products = [
     "price": "950",
     "url": "assets/images/laptops/Dell.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
   {
     "id": "4",
@@ -37,7 +37,7 @@ final List products = [
     "price": "1350",
     "url": "assets/images/laptops/hp_omen.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
   {
     "id": "5",
@@ -45,7 +45,7 @@ final List products = [
     "price": "1250",
     "url": "assets/images/laptops/razer.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
   {
     "id": "6",
@@ -53,6 +53,6 @@ final List products = [
     "price": "1100",
     "url": "assets/images/laptops/alienware.jpg",
     "options": ['Black', 'Blue', 'White', 'Red', 'Grey'],
-    "catagory": "laptop"
+    "catagory": "Laptops"
   },
 ];

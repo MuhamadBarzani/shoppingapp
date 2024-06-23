@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
     "Glasses",
     "Watches",
     "Laptops",
-    "Mobile Phones"
+    "Phones"
   ];
   int selectedIndex = 0;
   @override
@@ -105,11 +105,15 @@ class _HomeState extends State<Home> {
                           ),
                         );
                       },
-                      child: ProductCard(
-                        name: products[index]['name'],
-                        price: "\$" + (products[index]['price']),
-                        image: products[index]['url'] as String,
-                      ),
+                      child: catagories[selectedIndex] ==
+                                  products[index]['catagory'] ||
+                              catagories[selectedIndex] == "All"
+                          ? ProductCard(
+                              name: products[index]['name'],
+                              price: "\$" + (products[index]['price']),
+                              image: products[index]['url'] as String,
+                            )
+                          : null,
                     );
                   },
                 );
