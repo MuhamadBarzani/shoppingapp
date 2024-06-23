@@ -1,2 +1,5 @@
 Show case of the app
-https://github.com/MuhamadBarzani/shoppingapp/assets/42966157/70719ea9-2501-4ad7-8083-96cb86c4cf1d
+
+
+https://github.com/MuhamadBarzani/shoppingapp/assets/42966157/867f9b08-b918-414c-8d5d-a403041fff9d
+
