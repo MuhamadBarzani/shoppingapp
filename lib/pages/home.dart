@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingapp/Widgets/globalvariable.dart';
 import 'package:shoppingapp/Widgets/product_card.dart';
+import 'package:shoppingapp/Widgets/productslibrary.dart';
 import 'package:shoppingapp/pages/product_details.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
     "All",
     "Shoes",
     "Jeans",
-    "T-shirts",
+    "Tshirts",
     "Glasses",
     "Watches",
     "Laptops",
@@ -87,34 +87,36 @@ class _HomeState extends State<Home> {
             Expanded(child: LayoutBuilder(
               builder: (context, constraints) {
                 final productCount = (constraints.maxWidth / 250).truncate();
+                final List productShown = [];
+                for (var i = 0; i < products.length; i++) {
+                  if (catagories[selectedIndex] == products[i]['category'] ||
+                      catagories[selectedIndex] == "All") {
+                    productShown.add(products[i]);
+                  }
+                }
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: productCount, childAspectRatio: 1.04),
-                  itemCount: products.length,
+                  itemCount: productShown.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
-                        // Debugging line
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ProductDetails(
-                                product: products[index],
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: catagories[selectedIndex] ==
-                                  products[index]['catagory'] ||
-                              catagories[selectedIndex] == "All"
-                          ? ProductCard(
-                              name: products[index]['name'],
-                              price: "\$" + (products[index]['price']),
-                              image: products[index]['url'] as String,
-                            )
-                          : null,
-                    );
+                        onTap: () {
+                          // Debugging line
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ProductDetails(
+                                  product: productShown[index],
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: ProductCard(
+                          name: productShown[index]['name'],
+                          price: "\$${productShown[index]['price']}",
+                          image: productShown[index]['url'] as String,
+                        ));
                   },
                 );
               },
