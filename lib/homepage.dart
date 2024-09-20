@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingapp/pages/cart.dart';
 import 'package:shoppingapp/pages/home.dart';
+import 'package:shoppingapp/pages/login.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -9,7 +10,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Widget> pages = const [Home(), CartDetails()];
+  List<Widget> pages = const [Home(), CartDetails(), Login()];
   int currentPage = 0;
   @override
   Widget build(BuildContext context) {
@@ -23,12 +24,13 @@ class _HomepageState extends State<Homepage> {
               currentPage = value;
             });
           },
-          selectedItemColor: const Color.fromARGB(255, 241, 197, 0),
+          selectedItemColor: Colors.yellow[700],
           currentIndex: currentPage,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_basket), label: ""),
+                icon: Icon(Icons.shopping_cart_rounded), label: "Cart"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
           ],
         ),
         body: IndexedStack(index: currentPage, children: pages));

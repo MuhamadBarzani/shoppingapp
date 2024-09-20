@@ -18,83 +18,113 @@ class _CartDetailsState extends State<CartDetails> {
         centerTitle: true,
         title: Text("Cart", style: Theme.of(context).textTheme.titleMedium),
       ),
-      body: ListView.builder(
-        itemCount: cart.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-            child: ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              tileColor: Colors.yellow[400],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: Colors.transparent)),
-              leading: CircleAvatar(
-                backgroundColor: null,
-                radius: 30,
-                backgroundImage: AssetImage(cart[index]['url'] as String),
+      body: cart.isEmpty
+          ? Center(
+              child: Text(
+                "Your cart is empty!",
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              title: Text('Product Name: ${cart[index]['name']}'),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Type: ${cart[index]['options']}",
-                  ),
-                  Text(
-                    "Price: \$${cart[index]['price']}",
-                  ),
-                ],
-              ),
-              trailing: IconButton(
-                alignment: Alignment.topRight,
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text(
-                          "Delete Product",
-                          style: Theme.of(context).textTheme.bodySmall,
+            )
+          : ListView.builder(
+              itemCount: cart.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          cart[index]['url'] as String,
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
                         ),
-                        content: const Text(
-                            "Are you sure you want to delete this product from your cart?"),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                "No",
-                                style: TextStyle(color: Colors.blue),
-                              )),
-                          TextButton(
-                              onPressed: () {
-                                context
-                                    .read<CartProvider>()
-                                    .removeFromCart(cart[index]);
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                "Yes",
-                                style: TextStyle(color: Colors.red),
-                              ))
+                      ),
+                      title: Text(
+                        cart[index]['name'],
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Check if options is a List, and display it properly
+                          if (cart[index]['options'] is List)
+                            ...List.generate(
+                                (cart[index]['options'] as List).length,
+                                (optionIndex) {
+                              return Text(
+                                "Option ${optionIndex + 1}: ${(cart[index]['options'] as List)[optionIndex]}",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              );
+                            })
+                          else
+                            // If options is a string, display it as a single option
+                            Text(
+                              "Option: ${cart[index]['options']}",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          Text(
+                            "Price: \$${cart[index]['price']}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.green[700]),
+                          ),
                         ],
-                      );
-                    },
-                  );
-                },
-                icon: const Icon(
-                  Icons.delete,
-                  color: Color.fromARGB(255, 255, 17, 0),
-                  size: 30,
-                ),
-              ),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Delete Product",
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                content: const Text(
+                                    "Are you sure you want to delete this product from your cart?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("No",
+                                        style: TextStyle(color: Colors.blue)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      context
+                                          .read<CartProvider>()
+                                          .removeFromCart(cart[index]);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Yes",
+                                        style: TextStyle(color: Colors.red)),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.delete,
+                            color: Colors.red, size: 30),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
