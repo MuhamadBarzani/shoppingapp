@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const Padding(
                 padding: EdgeInsets.only(top: 20, right: 200),
                 child: Text(
-                  "Hello,\nSIGN UP!",
+                  "Welcome,\nSIGN UP!",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

@@ -22,12 +22,30 @@ class _HomeState extends State<Home> {
     "Phones"
   ];
   int selectedIndex = 0;
+  final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
 
-  // Method to filter products based on the selected category
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged); // Listen for changes
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose(); // Clean up the controller
+    super.dispose();
+  }
+
+  // Method to filter products based on the selected category and search query
   List filterProducts() {
     return products.where((product) {
-      return categories[selectedIndex] == product['category'] ||
-          categories[selectedIndex] == "All";
+      final matchesCategory =
+          categories[selectedIndex] == product['category'] ||
+              categories[selectedIndex] == "All";
+      final matchesSearch =
+          product['name'].toLowerCase().contains(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
     }).toList();
   }
 
@@ -35,6 +53,13 @@ class _HomeState extends State<Home> {
   void handleCategoryTap(int index) {
     setState(() {
       selectedIndex = index;
+    });
+  }
+
+  // Method to handle search input changes
+  void _onSearchChanged() {
+    setState(() {
+      searchQuery = _searchController.text;
     });
   }
 
@@ -72,8 +97,9 @@ class _HomeState extends State<Home> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _searchController, // Attach the controller
+                decoration: const InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 0), // Vertically centered
                   hintText: "Search...",
@@ -82,7 +108,7 @@ class _HomeState extends State<Home> {
                 ),
                 textAlignVertical:
                     TextAlignVertical.center, // Center text inside
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           ),
